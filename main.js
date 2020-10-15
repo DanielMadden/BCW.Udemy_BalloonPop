@@ -143,6 +143,9 @@ function checkGame() {
 
 function startGame(type) {
 
+  let root = document.documentElement;
+  root.style.setProperty("--click-here-animate", "still");
+
   if (type == 'metal') {
     gameLength = 7500
     readyGame()
@@ -238,7 +241,11 @@ function draw() {
   balloonElement.style.height = height + "px";
   balloonElement.style.width = width + "px";
 
-  clickCountElem.innerText = clickCount.toString();
+  if (clickCount == 0) {
+    clickCountElem.innerText = "Click"
+  } else {
+    clickCountElem.innerText = clickCount.toString();
+  }
   popCountElem.innerText = currentPopCount.toString();
   highPopCountElem.innerText = currentPlayer.topScore.toString();
 
@@ -249,11 +256,14 @@ function draw() {
 function stopGame() {
   console.log("game done")
 
+  let root = document.documentElement;
+  root.style.setProperty("--click-here-animate", "click-here");
+
   document.getElementById("game-controls").classList.add("hidden")
   document.getElementById("main-controls").classList.remove("hidden")
   document.getElementById("scoreboard").classList.remove("hidden")
 
-  clickCount = 0
+  clickCount = 0;
   height = 120
   width = 100
 
