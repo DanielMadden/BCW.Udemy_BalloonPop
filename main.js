@@ -15,12 +15,169 @@ let currentPlayer = {}
 let currentColor = "pink"
 let possibleColors = ["pink", "red", "reddish", "purplish", "purple"]
 
-function startGame() {
+let gameReady = false;
+let gameMode = false;
+let lobbyMusicChoice = "cake";
+let lobbyMusic = document.getElementById("lobby-music-" + lobbyMusicChoice)
+
+//#region most of the stuff I added outside the tutorial
+
+function popSound() {
+  // @ts-ignore
+  document.getElementById("pop-sound").currentTime = 0;
+  //@ts-ignore
+  document.getElementById("pop-sound").play();
+}
+
+function playMusic() {
+  lobbyMusic = document.getElementById("lobby-music-" + lobbyMusicChoice)// @ts-ignore
+  lobbyMusic.currentTime = 0;// @ts-ignore
+  lobbyMusic.play();
+}
+
+function logoClick() {
+
+  popSound()
+
+  if (gameMode == false) {
+    document.getElementById("game-modes").classList.remove("hidden")
+    gameMode = true
+  }
+
+}
+
+function modeNorm() {
+  lobbyMusicChoice = "cake";
+  lobbyMusic = document.getElementById("lobby-music-" + lobbyMusicChoice)// @ts-ignore
+
+  // @ts-ignore
+  setTimeout(function () { lobbyMusic.play(); }, 0500)
+  setInterval(function () {// @ts-ignore
+    lobbyMusic.currentTime = 0;// @ts-ignore
+    lobbyMusic.play();
+    playMusic();
+  }, 81000)
+}
+
+function modeCode() {
+
+  //@ts-ignore
+  document.getElementById("balloon-pop-logo").src = "balloon-pop-logo-codeworks.png"
+  let root = document.documentElement;
+  root.style.setProperty("--primary", "#03e1ff");
+  root.style.setProperty("--primary-dark", "#009eb3");
+  root.style.setProperty("--primary-lighten", "#47e9ff");
+  root.style.setProperty("--balloon-gradient", "linear-gradient(90deg, rgba(199,248,255,1) 0%, rgba(3,225,255,1) 50%, rgba(0,158,179,1) 100%)");
+  root.style.setProperty("--logo-animation", "1s linear infinite");
+  root.style.setProperty("--logo-animation-end", "translateX(20px)");
+  root.style.setProperty("--logo-animation-start", "translateX(-20px)");
+  root.style.setProperty("--balloon-animation", "1s linear infinite");
+  root.style.setProperty("--balloon-animation-end", "translateX(20px)");
+  root.style.setProperty("--balloon-animation-start", "translateX(-20px)");
+  // root.style.setProperty("--logo-animation", "3s linear infinite");
+  // root.style.setProperty("--logo-animation", "3s linear infinite");
+
+  lobbyMusicChoice = "8bit"; //@ts-ignore
+  lobbyMusic = document.getElementById("lobby-music-" + lobbyMusicChoice)// @ts-ignore
+  setTimeout(function () { lobbyMusic.play(); }, 0500)
+  setInterval(function () {// @ts-ignore
+    lobbyMusic.currentTime = 0;// @ts-ignore
+    lobbyMusic.play();
+  }, 180000)
+}
+
+function modeMetal() {
+  //@ts-ignore
+  document.getElementById("balloon-pop-logo").src = "balloon-pop-logo-metal.png"
+  let root = document.documentElement;
+  root.style.setProperty("--primary", "red");
+  root.style.setProperty("--primary-dark", "rgb(145, 0, 0)");
+  root.style.setProperty("--primary-lighten", "rgb(255, 78, 78)");
+  root.style.setProperty("--balloon-gradient", "linear-gradient(90deg, rgba(254,185,185,1) 0%, rgba(255,0,0,1) 47%, rgba(108,0,0,1) 100%)");
+  root.style.setProperty("--balloon-animation", "1s linear infinite");
+  root.style.setProperty("--balloon-animation-end", "translateX(20px)");
+  root.style.setProperty("--balloon-animation-start", "translateX(-20px)");
+  root.style.setProperty("--balloon-animation-type", "balloon-shake");
+  root.style.setProperty("--logo-animation-type", "balloon-shake");
+  root.style.setProperty("--logo-animation", "1s linear infinite");
+
+  //@ts-ignore
+  // setTimeout(function () { lobbyMusic.play(); }, 0500)
+  // setInterval(function () {// @ts-ignore
+  //   lobbyMusic.currentTime = 0;// @ts-ignore
+  //   lobbyMusic.play();
+  // }, 81000)
+
+  document.getElementById("start-button").setAttribute("onclick", "startGame('metal'), popSound()")
+  document.getElementById("pump").setAttribute("onclick", "inflate()")
+
+}
+
+function revealGame() {
+  popSound()
+
+  document.getElementById("game-modes").classList.add("hidden")
+  document.getElementById("game-display").classList.remove("hidden")
+
+}
+
+function readyGame() {
   document.getElementById("game-controls").classList.remove("hidden")
   document.getElementById("main-controls").classList.add("hidden")
   document.getElementById("scoreboard").classList.add("hidden")
-  startClock()
-  setTimeout(stopGame, gameLength)
+  let countdownElem = document.getElementById("countdown")
+  let gameLengthRounded = Math.round(gameLength / 1000)
+  countdownElem.innerText = gameLengthRounded.toString()
+  gameReady = true;
+}
+
+function checkGame() {
+  if (gameReady == true) {
+    startGame();
+    gameReady = false;
+  }
+}
+
+//#endregion
+
+function startGame(type) {
+
+  if (type == 'metal') {
+    gameLength = 7500
+    readyGame()
+    //@ts-ignore
+    document.getElementById("guitar-start").play();
+    //@ts-ignore
+    lobbyMusic.pause();
+    setTimeout(
+      //@ts-ignore
+      function () { document.getElementById("guitar-music").play() }
+      , 1000)
+    // setTimeout(
+    //   //@ts-ignore
+    //   function () { lobbyMusic.play() }
+    //   , 7500)
+    startClock()
+    setTimeout(stopGame, 7500)
+  } else {
+    startClock()
+    setTimeout(stopGame, gameLength)
+  }
+
+  //#region unused audio concept
+  // setTimeout(
+  //   //@ts-ignore
+  //   function () { document.getElementById("guitar-build").play() }
+  //   , 1000)
+  // setTimeout(
+  //   //@ts-ignore
+  //   function () { document.getElementById("guitar-music").play() }
+  //   , 3500)
+  // setTimeout(
+  //   //@ts-ignore
+  //   function () { document.getElementById("guitar-build").pause() }
+  //   , 3800)
+  //#endregion
 }
 
 function startClock() {
@@ -35,7 +192,7 @@ function stopClock() {
 
 function drawClock() {
   let countdownElem = document.getElementById("countdown")
-  countdownElem.innerText = (timeRemaining / 1000).toString();
+  countdownElem.innerText = (Math.round(timeRemaining / 1000)).toString();
   timeRemaining -= 1000;
 }
 
@@ -55,8 +212,7 @@ function checkBalloonPop() {
     getRandomColor()
     balloonElement.classList.add(currentColor)
 
-    // @ts-ignore
-    document.getElementById("pop-sound").play();
+    popSound()
 
     currentPopCount++;
     height = 0;
@@ -110,6 +266,11 @@ function stopGame() {
   stopClock();
   draw();
   drawScoreboard();
+
+  gameReady = false;
+
+  //@ts-ignore
+  // document.getElementById("lobby-music").play();
 }
 
 //#endregion

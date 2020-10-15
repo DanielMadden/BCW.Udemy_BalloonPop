@@ -9,6 +9,36 @@
   --dark:  rgb(25, 25, 25);
   --dark-lighten: #504c4c;
   --light: #fdfdfd;
+  --logo-animation: 5s ease-in-out infinite;
+  --logo-animation-end: translateY(-15px) rotate(1deg);
+  --logo-animation-start: translateY(0px) rotate(-1deg);
+  --logo-animation-type: balloon-logo-float;
+  --balloon-gradient: linear-gradient(90deg, rgb(255, 169, 255) 0%, rgba(255,100,235,1) 26%, rgba(215,38,194,1) 75%, rgb(189, 45, 174) 100%);
+  --balloon-animation: 5s ease-in-out infinite;
+  --balloon-animation-end: translateY(-25px) rotate(5deg);
+  --balloon-animation-start: translateY(0px) rotate(-5deg);
+  --balloon-animation-type: balloon-float;
+}
+
+#header-box:hover {
+  cursor: pointer;
+}
+
+#header-box {
+  animation: var(--logo-animation-type) var(--logo-animation);
+}
+
+@keyframes balloon-logo-float{
+  0%,100% {
+    transform: var(--logo-animation-end);
+  }
+  50% {
+    transform: var(--logo-animation-start);
+  }
+}
+
+@keyframes balloon-logo-shake{
+
 }
 
 body {
@@ -93,6 +123,10 @@ button:hover{
   top: -20px;
 }
 
+.pump:hover {
+  cursor: pointer;
+}
+
 .pump-box{
   background-color: var(--primary-lighten);
   height: 130px;
@@ -107,7 +141,7 @@ button:hover{
   user-select:none;
 }
 .pump-box span{
-  background-color: antiquewhite;
+  /* background-color: antiquewhite; */
   padding: .5em;
 }
 
@@ -117,12 +151,11 @@ button:hover{
   background-color: blue;
   border-radius: 50%;
   transition: all .2s ease;
-  animation: balloon-float 5s ease-in-out infinite;
+  animation: var(--balloon-animation-type) var(--balloon-animation);
   align-self: flex-end;
   margin: 0 auto;
   box-shadow: inset -10px -10px 12px rgba(0,0,0,.3);
-  background: linear-gradient(90deg, rgb(255, 169, 255) 0%, rgba(255,100,235,1) 26%, rgba(215,38,194,1) 75%, rgb(189, 45, 174) 100%);
-}
+  background: var(--balloon-gradient)}
 
 .balloon.red{
   filter:hue-rotate(20deg);
@@ -139,10 +172,31 @@ button:hover{
 
 @keyframes balloon-float{
   0%,100% {
-    transform: translateY(-25px) rotate(5deg);
+    transform: var(--balloon-animation-end);
   }
   50% {
-    transform: translateY(0px) rotate(-5deg);
+    transform: var(--balloon-animation-start);
+  }
+}
+
+@keyframes balloon-shake{
+  0% {
+    transform: translateX(-5px) translateY(-3px);
+  }
+  20% {
+    transform: translateX(5px) translateY(1px);
+  }
+  40% {
+    transform: translateX(-5px) translateY(-8px);
+  }
+  60% {
+    transform: translateX(8px) translateY(-3px);
+  }
+  80% {
+    transform: translateX(-8px) translateY(3px);
+  }
+  100% {
+    transform: translateX(-5px) translateY(-3px);
   }
 }
 

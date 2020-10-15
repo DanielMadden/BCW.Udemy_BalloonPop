@@ -1,0 +1,9 @@
+:root{
+  --primary: #f393fd;
+  --primary-dark: #af2cbc;
+  --primary-lighten: #facaff;
+}
+
+.balloon { 
+  background: linear-gradient(90deg, rgb(255, 169, 255) 0%, rgba(255,100,235,1) 26%, rgba(215,38,194,1) 75%, rgb(189, 45, 174) 100%);
+}
