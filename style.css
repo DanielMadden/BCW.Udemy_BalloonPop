@@ -24,7 +24,7 @@
   cursor: pointer;
 }
 
-#header-box {
+#balloon-pop-logo {
   animation: var(--logo-animation-type) var(--logo-animation);
 }
 
@@ -37,8 +37,22 @@
   }
 }
 
-@keyframes balloon-logo-shake{
+@keyframes finger-animation{
+  0%,100% {
+    transform: translateY(-15px) rotate(-88deg);
+  }
+  50% {
+    transform: translateY(15px) rotate(-92deg);
+  }
+}
 
+#pointer-finger {
+  position: absolute;
+  top: 140%;
+  left: 40%;
+  width: 15%;
+  animation: finger-animation 3s ease-in-out infinite;
+  transform: rotate(30deg);
 }
 
 body {

@@ -40,6 +40,7 @@ function logoClick() {
   popSound()
 
   if (gameMode == false) {
+    document.getElementById("pointer-finger").classList.add("hidden")
     document.getElementById("game-modes").classList.remove("hidden")
     gameMode = true
   }
